@@ -39,4 +39,5 @@ echo "Indexing and serving at localhost:8000...(Ctrl-C to stop it)"
 echo "Command:"
 echo "$COMMAND"
 
-sh -c "$COMMAND"
+echo "------------------------"
+

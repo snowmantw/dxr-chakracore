@@ -40,4 +40,5 @@ echo "Command:"
 echo "$COMMAND"
 
 echo "------------------------"
+eval "$COMMAND"
 

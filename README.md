@@ -8,7 +8,7 @@
 
 ### Run it
 
-1. Clone the repo
+1. Clone the repo with `--recursive` option: `git clone --recursive https://github.com/snowmantw/dxr-chakracore.git`
 2. Change working directory to it
 3. `./build.sh <path to ChakraCore directory>`
 
@@ -22,6 +22,7 @@ The whole building and indexing process will take about 1 hour to finish.
 
 Also, because some mysterious Clang segmentation failure during compilation,
 the `ChakraCore` cannot be built as debugging build. The root cause should be [DXR's Clang plugin][2].
+
 
 
 ## Why ?

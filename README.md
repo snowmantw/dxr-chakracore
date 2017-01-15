@@ -14,6 +14,8 @@
 
 It should automatically run things inside [the patched DXR][1] with two additional `CXX` and `CC` wrappers copied into the `ChakraCore` directory.
 
+There are other options available for the build script. Type `./build.sh --help` to see more.
+
 The wrappers are necessary to pass DXR flags to the building process of `ChakraCore`.
 
 ### Note
@@ -23,6 +25,13 @@ The whole building and indexing process will take about 1 hour to finish.
 Also, because some mysterious Clang segmentation failure during compilation,
 the `ChakraCore` cannot be built as debugging build. The root cause should be [DXR's Clang plugin][2].
 
+### Troubleshooting
+
+#### Docker compose complains API version mismatching:
+
+Run the `build.sh` with option `--x-force-compose-api-118`. It will add such environment flag for compatibility:
+
+    export COMPOSE_API_VERSION=1.18
 
 
 ## Why ?

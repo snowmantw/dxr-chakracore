@@ -107,20 +107,27 @@ then
   ZFLAG="Z=\":Z\""
 fi
 
+# install dxr if it doesn't exist in the container.
+DXR_COMMAND_CHECK_EXIST="cd /home/dxr/dxr && (dxr || (echo 'DXR need to be installed first' && make)) && cd /home/dxr"
+DXR_COMMAND_FILE="`mktemp`"
+
 # if "command" is not a file path:
 if [ ! -f "$DXR_COMMAND" ];
 then
-  DXR_COMMAND_FILE="`mktemp`"
   echo "#!/bin/bash"  >> $DXR_COMMAND_FILE
+  echo $DXR_COMMAND_CHECK_EXIST >> $DXR_COMMAND_FILE
   echo "$DXR_COMMAND" >> $DXR_COMMAND_FILE
 else
-  DXR_COMMAND_FILE="$DXR_COMMAND"  
+  echo "#!/bin/bash"  >> $DXR_COMMAND_FILE
+  echo $DXR_COMMAND_CHECK_EXIST >> $DXR_COMMAND_FILE
+  cat "$DXR_COMMAND" >> "$DXR_COMMAND_FILE"
 fi
 
 COMMAND="cd $DXR && CONFIG=$CONFIG SOURCE=$SOURCE DXR_COMMAND_FILE=$DXR_COMMAND_FILE DXR_PORT=$DXR_PORT $ZFLAG $COMPOSE_API_FLAG make run"
 COMMAND_FILE="`mktemp`"
 echo "#!/bin/bash" >> $COMMAND_FILE
 echo "$COMMAND" >> $COMMAND_FILE
+echo "rm $COMMAND_FILE && rm $DXR_COMMAND_FILE && rm $SOURCE/cc && rm $SOURCE/cxx && echo '*Command ended*'"
 
 echo "Indexing and serving at localhost:$PORT...(Ctrl-C to stop it)"
 echo "Command:"
@@ -133,4 +140,3 @@ then
 else
   bash $COMMAND_FILE
 fi
-
